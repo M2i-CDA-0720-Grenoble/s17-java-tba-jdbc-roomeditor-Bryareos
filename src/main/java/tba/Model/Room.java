@@ -58,12 +58,12 @@ public class Room
             DatabaseHandler dbHandler = DatabaseHandler.getInstance();
             PreparedStatement statement = dbHandler.getConnection().prepareStatement("SELECT * FROM `room` WHERE `id` = ?"
                 // Rajouter ces deux lignes si on rencontre une erreur de type "Operation not allowed for a result set of type ResultSet.TYPE_FORWARD_ONLY"
-                // ,ResultSet.TYPE_SCROLL_SENSITIVE
-                // ,ResultSet.CONCUR_UPDATABLE
+                ,ResultSet.TYPE_SCROLL_SENSITIVE
+                ,ResultSet.CONCUR_UPDATABLE
             );
             statement.setInt(1, id);
             ResultSet set = statement.executeQuery();
-    
+
             // Comme on sait que la requête peut uniquement renvoyer un seul résultat (s'il existe),
             // ou aucun (s'il n'existe pas), cherche le premier résultat de la requête...
             if (set.first()) {

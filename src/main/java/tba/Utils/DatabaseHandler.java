@@ -11,11 +11,11 @@ public class DatabaseHandler
     private static DatabaseHandler instance;
 
     private Connection connection;
-    
+
     private DatabaseHandler()
     {
         try {
-            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/java_tba", "root", "root");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/java_tba?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
         }
         catch (SQLException exception) {
             exception.printStackTrace();

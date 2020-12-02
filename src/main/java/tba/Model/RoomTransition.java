@@ -9,7 +9,7 @@ import java.util.List;
 import tba.Utils.DatabaseHandler;
 
 public class RoomTransition {
-    
+
     private int id;
     private int fromRoomId;
     private int toRoomId;
@@ -52,7 +52,7 @@ public class RoomTransition {
             PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement("SELECT * FROM `room_transition` WHERE `from_room_id` = ?");
             statement.setInt(1, room.getId());
             ResultSet set = statement.executeQuery();
-    
+
             List<RoomTransition> transitions = new ArrayList<>();
             while (set.next()) {
                 transitions.add(
@@ -76,11 +76,13 @@ public class RoomTransition {
     public static RoomTransition findByFromRoomAndDirection(Room room, Direction direction)
     {
         try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement("SELECT * FROM `room_transition` WHERE `from_room_id` = ? AND `direction_id` = ?");
+            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement("SELECT * FROM `room_transition` WHERE `from_room_id` = ? AND `direction_id` = ?"
+                ,ResultSet.TYPE_SCROLL_SENSITIVE
+                ,ResultSet.CONCUR_UPDATABLE);
             statement.setInt(1, room.getId());
             statement.setInt(2, direction.getId());
             ResultSet set = statement.executeQuery();
-    
+
             if (set.first()) {
                 return new RoomTransition(
                     set.getInt("id"),
